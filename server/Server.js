@@ -30,7 +30,9 @@
             _options: DefaultOptions,
             _authMiddleware: new AuthMiddleware(),
             _requestMiddleware: new RequestMiddleware(),
-
+            //
+            // Initialize
+            //
             Initialize: function(options) {
                 options = options || DefaultOptions;
 
@@ -60,7 +62,9 @@
                 this._authMiddleware.Initialize(this);
                 this._requestMiddleware.Initialize(this);
             },
-
+            //
+            // InitRoutes
+            //
             InitRoutes: function() {
                 this._app.all('*', this._authMiddleware.AllRequests());
                 this._app.get('/', this._requestMiddleware.GetRoot());
@@ -71,21 +75,23 @@
                 this._app.use(this._authMiddleware.OnError());
                 this._app.use(this._requestMiddleware.OnError());
             },
-
+            //
+            // Listen
+            //
             Listen: function(host, port) {
-
                 host = host || this._options.host;
                 port = port || this._options.port;
 
                 var that = this;
-
                 this._server = this._app.listen(port, host, function() {
                     var bind_host = that._server.address().address;
                     var bind_port = that._server.address().port;
                     that.Log('App listening at %s:%s', bind_host, bind_port);
                 });
             },
-
+            //
+            // Log: custom logger
+            //
             Log: function() {
                 if (this._options.logger === true) {
                     console.log.apply(console, arguments);

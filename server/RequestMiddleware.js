@@ -8,7 +8,6 @@
 
     var TemplateEngine = require('./TemplateEngine');
 
-
     //
     // RequestMiddleware
     //
@@ -16,7 +15,6 @@
         return {
             _server: null,
             _templateEngine: new TemplateEngine(),
-
             //
             // Initializer
             //
@@ -64,32 +62,19 @@
                 return function(req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip, req.body);
 
-                    var fs = require('fs');
-                    var Handlebars = require('handlebars');
+                    var payload = {
+                        'name': req.body['sender.name'],
+                        'company': req.body['sender.company']
+                    };
 
-                    var filename = require.resolve("./Pdf/Templates/template.html");
+                    var template = that._templateEngine.Load('./Pdf/Templates/template.html');
+                    var processed = that._templateEngine.Process(template, payload);
 
-                    fs.readFile(filename, 'utf8', function (err, source) {
-                        if (err) {
-                            res.send(err);
-                        }
-
-                        var template = Handlebars.compile(source);
-
-                        var obj = {
-                            "name": req.body['sender.name'],
-                            "company": req.body['sender.company']
-                        };
-
-                        var html = template(obj);
-
-                        res.send(html);
-                    });
+                    res.send(processed);
                 }
             },
             //
             // Error handler
-       // Error handler
             //
             OnError: function() {
                 var that = this;

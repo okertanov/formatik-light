@@ -11,8 +11,14 @@
     //
     var PdfGenerator = function() {
         return {
+            //
+            // Initialize
+            //
             Initialize: function() {
             },
+            //
+            // Generate
+            //
             Generate: function(name, options) {
             }
         };
