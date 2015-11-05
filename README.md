@@ -27,24 +27,24 @@ MVP (tech perspective)
 
 ### Tier 1 [ ]
  1. Post
- 2. *Sync generation*
+ 2. **Sync generation**
  3. Response
 
 ### Tier 2 [ ]
 1. Post
 2. Sync generation
-3. *Persistence (both html/pdf)*
+3. **Persistence (both html/pdf)**
 4. Response
 5. Stabilization
 6. Initial online deployment via 'git push www'
 
 ### Tier 3 [ ]
-1. *Form validation*
+1. **Form validation**
 2. Post
-3. *Response*
-4. *Async generation/Queue (zmq)*
-5. *Generation process notification (websockets)*
-6. *Generation process indication (jquery)*
+3. **Response**
+4. **Async generation/Queue (zmq)**
+5. **Generation process notification (websockets)**
+6. **Generation process indication (jquery)**
 7. Persistence (both html/pdf)
 
 ### Tier 4
@@ -54,7 +54,7 @@ MVP (tech perspective)
 4. Async generation/Queue (zmq)
 5. Generation process notification (websockets)
 6. Generation process indication (jquery)
-7. *Web PDF preview*
+7. **Web PDF preview**
 8. Persistence (both html/pdf)
 
 ### Tier 4
