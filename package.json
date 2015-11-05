@@ -1,0 +1,33 @@
+{
+  "name": "formatik-light",
+  "version": "0.0.1",
+  "description": "Formatik-Light",
+  "main": "server/App.js",
+  "scripts": {
+    "start": "./bin/run.sh",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "formatik",
+    "pdf"
+  ],
+  "author": "Oleg Kertanov",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "cheerio": "^0.19.0",
+    "express": "^4.13.1",
+    "morgan": "^1.6.1",
+    "multer": "^0.1.8",
+    "phantom": "^0.7.2",
+    "request": "^2.58.0",
+    "uuid": "^2.0.1"
+  },
+  "devDependencies": {
+    "should": "^7.0.2"
+  }
+}

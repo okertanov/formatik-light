@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e -u
+
+echo
+echo ">>>>> Updating /srv/www/formatik.lexiko.me..."
+echo
+
+unset GIT_DIR
+cd /srv/www/formatik.lexiko.me/formatik-light || exit
+pwd
+git pull origin master
+git clean -f -d
+(exec git-update-server-info)
+
+if [ -x "./bin/deploy.sh" ];
+then
+    (exec ./bin/deploy.sh)
+else
+    echo ">>>>> No deploy.sh script found."
+fi
+
+if [ -x "./bin/run.sh" ];
+then
+    (exec ./bin/run.sh)
+else
+    echo ">>>>> No run.sh script found."
+fi

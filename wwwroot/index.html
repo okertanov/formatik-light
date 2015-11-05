@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>.::Formatik Light::.</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="components/jquery/dist/jquery.js"></script>
+    <script src="components/jquery-ui/ui/core.js"></script>
+    <script src="components/jquery-ui/ui/widget.js"></script>
+    <script src="components/jquery-ui/ui/accordion.js"></script>
+    <script src="client-app.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <form class="form-horizontal" action="/generate" method="post">
+    <fieldset>
+
+    <!-- Form Name -->
+    <legend>Place an order</legend>
+
+    <div class="row">
+        <h3 class="ui-form-header">
+            <img src="mail-envelope.png" />
+            Sender's information
+        </h3>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="id-sender-name">Name, Surname</label>
+      <div class="col-md-6">
+      <input id="id-sender-name" name="sender.name" type="text" placeholder="Name, Surname" class="form-control input-md">
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="id-sender-company">Company</label>
+      <div class="col-md-6">
+      <input id="id-sender-company" name="sender.company" type="text" placeholder="Company" class="form-control input-md">
+      </div>
+    </div>
+
+    <div class="row">
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="id-submit-button"></label>
+          <div class="col-md-6">
+            <button id="id-submit-button" name="submit.button" type="submit" class="col-md-5 btn btn-success">Print</button>
+          </div>
+        </div>
+    </div>
+
+    </fieldset>
+    </form>
+
+</div> <!-- .container -->
+
+</body>
+</html>
