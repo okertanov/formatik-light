@@ -15,7 +15,7 @@
             },
             Load: function(name) {
             },
-            Save: function(name, template) {
+            Save: function(name, contents) {
             },
             Process: function(template, payload) {
             }
