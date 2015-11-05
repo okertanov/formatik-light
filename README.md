@@ -24,11 +24,23 @@ Deployment & Running
 
     npm start
 
+### Test it
 
-Tests
------
+    npm test
 
-    mocha
+### Monitor it
+
+    forever list
+    tail -f var/log/forever.log
+
+### Kill it
+
+    forever stop formatik-light
+    forever stopall
+
+### Open in a browser
+
+[http://localhost:8080/index.html](http://localhost:8080/index.html)
 
 
 Links
