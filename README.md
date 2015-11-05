@@ -20,6 +20,10 @@ Deployment & Running
     npm install
     bower install
 
+### Run it
+
+    npm start
+
 
 Tests
 -----
