@@ -28,8 +28,9 @@
             _app: express(),
             _server: null,
             _options: DefaultOptions,
-            _amiddleware: new AuthMiddleware(),
-            _bmiddleware: new RequestMiddleware(),
+            _authMiddleware: new AuthMiddleware(),
+            _requestMiddleware: new RequestMiddleware(),
+
             Initialize: function(options) {
                 options = options || DefaultOptions;
 
@@ -56,29 +57,35 @@
                 this._app.use(body_parser.urlencoded({ extended: true }));
                 this._app.use(multer());
 
-                this._amiddleware.Initialize(this);
-                this._bmiddleware.Initialize(this);
+                this._authMiddleware.Initialize(this);
+                this._requestMiddleware.Initialize(this);
             },
+
             InitRoutes: function() {
-                this._app.all('*', this._amiddleware.AllRequests());
-                this._app.get('/', this._bmiddleware.GetRoot());
-                this._app.get('/status', this._bmiddleware.GetStatus());
-                this._app.get('/admin', this._bmiddleware.GetAdmin());
-                this._app.post('/generate', this._bmiddleware.PostGenerate());
+                this._app.all('*', this._authMiddleware.AllRequests());
+                this._app.get('/', this._requestMiddleware.GetRoot());
+                this._app.get('/status', this._requestMiddleware.GetStatus());
+                this._app.get('/admin', this._requestMiddleware.GetAdmin());
+                this._app.post('/generate', this._requestMiddleware.PostGenerate());
                 this._app.use(express.static(__dirname + '/../wwwroot/'));
-                this._app.use(this._amiddleware.OnError());
-                this._app.use(this._bmiddleware.OnError());
+                this._app.use(this._authMiddleware.OnError());
+                this._app.use(this._requestMiddleware.OnError());
             },
+
             Listen: function(host, port) {
+
                 host = host || this._options.host;
                 port = port || this._options.port;
+
                 var that = this;
+
                 this._server = this._app.listen(port, host, function() {
                     var bind_host = that._server.address().address;
                     var bind_port = that._server.address().port;
                     that.Log('App listening at %s:%s', bind_host, bind_port);
                 });
             },
+
             Log: function() {
                 if (this._options.logger === true) {
                     console.log.apply(console, arguments);

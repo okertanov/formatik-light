@@ -6,17 +6,25 @@
 
     "use strict";
 
+    var TemplateEngine = require('./TemplateEngine');
+
+
     //
     // RequestMiddleware
     //
     var RequestMiddleware = function() {
         return {
             _server: null,
+            _templateEngine: new TemplateEngine(),
+
             //
             // Initializer
             //
             Initialize: function(server) {
                 this._server = server;
+
+                this._templateEngine.Initialize();
+
             },
             //
             // Request handler: 'GET /'
@@ -55,12 +63,33 @@
                 var that = this;
                 return function(req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip, req.body);
-                    var responseText = '/generate: ' + JSON.stringify(req.body);
-                    res.send(responseText);
+
+                    var fs = require('fs');
+                    var Handlebars = require('handlebars');
+
+                    var filename = require.resolve("./Pdf/Templates/template.html");
+
+                    fs.readFile(filename, 'utf8', function (err, source) {
+                        if (err) {
+                            res.send(err);
+                        }
+
+                        var template = Handlebars.compile(source);
+
+                        var obj = {
+                            "name": req.body['sender.name'],
+                            "company": req.body['sender.company']
+                        };
+
+                        var html = template(obj);
+
+                        res.send(html);
+                    });
                 }
             },
             //
             // Error handler
+       // Error handler
             //
             OnError: function() {
                 var that = this;
