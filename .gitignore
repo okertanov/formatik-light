@@ -1,3 +1,5 @@
 wwwroot/components
 node_modules
 var/logs/*.log
+.idea
+*.log
