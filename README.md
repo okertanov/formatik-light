@@ -3,6 +3,62 @@ Formatik-Light
 
 General info
 ------------
+The main goal is to create configurable, deployable, nodejs-based simple to use "Web form to PDF" solution.
+Simple use cases:
+
+ - Client configure the layouts for both web/pdf presentations;
+ - Client deploys the solution to be online;
+ - User can open an url;
+ - User can fill a form;
+ - User can see validation warnings/hints;
+ - User submits a form;
+ - User can see generation progress;
+ - User can see generation errors;
+ - User can get pdf file preview;
+ - User can store pdf file locally;
+ - User can get persistent link to that generated pdf;
+ - User can get persistent link to html preview page;
+
+MVP (tech perspective)
+----------------------
+### Tier 0 [+]
+ 1. Post
+ 2. Response
+
+### Tier 1 [ ]
+ 1. Post
+ 2. *Sync generation*
+ 3. Response
+
+### Tier 2 [ ]
+1. Post
+2. Sync generation
+3. *Persistence (both html/pdf)*
+4. Response
+5. Stabilization
+6. Initial online deployment via 'git push www'
+
+### Tier 3 [ ]
+1. *Form validation*
+2. Post
+3. *Response*
+4. *Async generation/Queue (zmq)*
+5. *Generation process notification (websockets)*
+6. *Generation process indication (jquery)*
+7. Persistence (both html/pdf)
+
+### Tier 4
+1. Form validation
+2. Post
+3. Response
+4. Async generation/Queue (zmq)
+5. Generation process notification (websockets)
+6. Generation process indication (jquery)
+7. *Web PDF preview*
+8. Persistence (both html/pdf)
+
+### Tier 4
+ Stabilization
 
 Deployment & Running
 --------------------
