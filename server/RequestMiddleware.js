@@ -34,14 +34,13 @@
 
                 this._templateEngine.Initialize();
                 this._pdfGenerator.Initialize();
-
             },
             //
             // Request handler: 'GET /'
             //
             GetRoot: function() {
                 var that = this;
-                return function(req, res, next) {
+                return function (req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip);
                     res.sendStatus(403);
                 }
@@ -138,9 +137,9 @@
             this.message = what;
         }
     }
+
     RequestMiddlewareError.prototype = Object.create(Error.prototype);
     RequestMiddlewareError.prototype.constructor = RequestMiddlewareError;
-
 
     //
     // Module Exports

@@ -26,10 +26,11 @@
                 var promise = new Promise(function(resolve, reject) {
                     try {
                         var fullname = require.resolve(filename);
-                        fs.readFile(fullname, 'utf8', function (err, data) {
+                        fs.readFile(fullname, 'utf8', function(err, data) {
                             if (err) {
                                 reject(err);
-                            };
+                            }
+
                             resolve(data);
                         });
                     }
@@ -45,7 +46,7 @@
             Save: function(filename, contents) {
                 var promise = new Promise(function(resolve, reject) {
                     try {
-                        fs.writeFile(filename, contents, function (err) {
+                        fs.writeFile(filename, contents, function(err) {
                             if (err) {
                                 reject(err);
                             };

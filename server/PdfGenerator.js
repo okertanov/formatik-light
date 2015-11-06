@@ -47,7 +47,7 @@
                             timeout: options.timeout
                         };
 
-                        fs.readFile(filenameFrom, 'utf8', function (err, data) {
+                        fs.readFile(filenameFrom, 'utf8', function(err, data) {
                             if (err) {
                                 reject(err);
                             };
