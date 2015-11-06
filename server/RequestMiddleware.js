@@ -67,7 +67,7 @@
                         'company': req.body['sender.company']
                     };
 
-                    var template = that._templateEngine.Load('./Pdf/Templates/template.html');
+                    var template = that._templateEngine.Load('./templates/template.html');
                     var processed = that._templateEngine.Process(template, payload);
 
                     res.send(processed);
