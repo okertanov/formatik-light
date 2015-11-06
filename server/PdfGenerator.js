@@ -53,7 +53,11 @@
 
                         var config = {
                             format: options.format,
+                            orientation: options.orientation,
+                            border: options.border,
                             type: options.type,
+                            quality: options.quality,
+                            phantomArgs: options.phantomArgs,
                             timeout: options.timeout
                         };
 
