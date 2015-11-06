@@ -6,7 +6,6 @@
 
     "use strict";
 
-    var path = require('path');
     var uuid = require('uuid');
     var TemplateEngine = require('./TemplateEngine');
     var PdfGenerator = require('./PdfGenerator');
@@ -16,13 +15,6 @@
     // RequestMiddleware
     //
     var RequestMiddleware = function() {
-        var GetOutputPathFor = function(fileMask, fileExt) {
-            var fileName = fileMask + '.' + fileExt.toLowerCase();
-            var filePath = path.join(__dirname, '..', 'var', 'generated', fileName);
-            var normalizedFilePath = path.normalize(filePath);
-            return normalizedFilePath;
-        };
-
         return {
             _server: null,
             _templateEngine: new TemplateEngine(),
@@ -85,9 +77,9 @@
                     };
 
                     var outFileMask = uuid.v4(),
-                        outFileHtmlPath = GetOutputPathFor(outFileMask, 'html'),
-                        outFilePdfPath = GetOutputPathFor(outFileMask, 'pdf'),
-                        inFileTemplate = './templates/template.html';
+                        outFileHtmlPath = that._fileManager.GetOutputPathFor(outFileMask, 'html'),
+                        outFilePdfPath = that._fileManager.GetOutputPathFor(outFileMask, 'pdf'),
+                        inFileTemplate = that._fileManager.GetTemplatePathFor('template.html');
 
                     that._fileManager.Load(inFileTemplate)
                     .then(function(template) {

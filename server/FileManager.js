@@ -7,6 +7,7 @@
     "use strict";
 
     var fs = require('fs');
+    var path = require('path');
 
     //
     // FileManager
@@ -24,7 +25,7 @@
             Load: function(filename) {
                 var promise = new Promise(function(resolve, reject) {
                     try {
-                        var fullname = require.resolve(filename);
+                        var fullname = path.resolve(filename);
                         fs.readFile(fullname, 'utf8', function(err, data) {
                             if (err) {
                                 reject(err);
@@ -57,6 +58,23 @@
                     }
                 });
                 return promise;
+            },
+            //
+            // GetOutputPathFor
+            //
+            GetOutputPathFor: function(fileMask, fileExt) {
+                var fileName = fileMask + '.' + fileExt.toLowerCase();
+                var filePath = path.join(__dirname, '..', 'var', 'generated', fileName);
+                var normalizedFilePath = path.normalize(filePath);
+                return normalizedFilePath;
+            },
+            //
+            // GetTemplatePathFor
+            //
+            GetTemplatePathFor: function(templateName) {
+                var filePath = path.join(__dirname, 'templates', templateName);
+                var normalizedFilePath = path.normalize(filePath);
+                return normalizedFilePath;
             }
         };
     };
