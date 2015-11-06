@@ -2,7 +2,7 @@
 // TemplateEngine.js
 //
 
-(function() {
+(function () {
 
     "use strict";
 
@@ -12,28 +12,29 @@
     //
     // TemplateEngine
     //
-    var TemplateEngine = function() {
+    var TemplateEngine = function () {
         return {
             //
             // Initialize
             //
-            Initialize: function() {
+            Initialize: function () {
             },
             //
             // Load
             //
-            Load: function(filename) {
-                var promise = new Promise(function(resolve, reject) {
+            Load: function (filename) {
+                var promise = new Promise(function (resolve, reject) {
                     try {
                         var fullname = require.resolve(filename);
                         fs.readFile(fullname, 'utf8', function (err, data) {
                             if (err) {
                                 reject(err);
-                            };
+                            }
+                            ;
                             resolve(data);
                         });
                     }
-                    catch(e) {
+                    catch (e) {
                         reject(e);
                     }
                 });
@@ -42,17 +43,20 @@
             //
             // Save
             //
-            Save: function(filename, contents) {
-                var promise = new Promise(function(resolve, reject) {
+            Save: function (filename, contents) {
+                var promise = new Promise(function (resolve, reject) {
                     try {
                         fs.writeFile(filename, contents, function (err) {
                             if (err) {
                                 reject(err);
-                            };
-                            resolve(true);
+                            }
+                            ;
+
+                            var fullname = require.resolve(filename);
+                            resolve(fullname);
                         });
                     }
-                    catch(e) {
+                    catch (e) {
                         reject(e);
                     }
                 });
@@ -61,17 +65,18 @@
             //
             // Process
             //
-            Process: function(template, payload) {
-                var promise = new Promise(function(resolve, reject) {
+            Process: function (template, payload) {
+                var promise = new Promise(function (resolve, reject) {
                     try {
                         var compiled = Handlebars.compile(template);
                         var processed = compiled(payload);
                         resolve(processed);
                     }
-                    catch(e) {
+                    catch (e) {
                         reject(e);
                     }
                 });
+
                 return promise;
             }
         };

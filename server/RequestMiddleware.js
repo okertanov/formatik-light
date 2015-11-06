@@ -2,34 +2,39 @@
 // RequestMiddleware.js
 //
 
-(function() {
+(function () {
 
     "use strict";
 
+    var fs = require('fs');
+
     var TemplateEngine = require('./TemplateEngine');
+    var PdfGenerator = require('./PdfGenerator');
 
     //
     // RequestMiddleware
     //
-    var RequestMiddleware = function() {
+    var RequestMiddleware = function () {
         return {
             _server: null,
             _templateEngine: new TemplateEngine(),
+            _pdfGenerator: new PdfGenerator(),
+
             //
             // Initializer
             //
-            Initialize: function(server) {
+            Initialize: function (server) {
                 this._server = server;
 
                 this._templateEngine.Initialize();
-
+                this._pdfGenerator.Initialize();
             },
             //
             // Request handler: 'GET /'
             //
-            GetRoot: function() {
+            GetRoot: function () {
                 var that = this;
-                return function(req, res, next) {
+                return function (req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip);
                     res.sendStatus(403);
                 }
@@ -37,9 +42,9 @@
             //
             // Request handler: 'GET /status'
             //
-            GetStatus: function() {
+            GetStatus: function () {
                 var that = this;
-                return function(req, res, next) {
+                return function (req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip);
                     res.send('STATUS: OK');
                 }
@@ -47,9 +52,9 @@
             //
             // Request handler: 'GET /admin'
             //
-            GetAdmin: function() {
+            GetAdmin: function () {
                 var that = this;
-                return function(req, res, next) {
+                return function (req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip);
                     res.sendStatus(401);
                 }
@@ -57,37 +62,49 @@
             //
             // Request handler: 'POST /generate'
             //
-            PostGenerate: function() {
+            PostGenerate: function () {
                 var that = this;
-                return function(req, res, next) {
+                return function (req, res, next) {
                     that._server.Log('Request: ', req.path, req.ip, req.body);
 
-                    var payload = {
-                        'generator': 'Formatik Light',
-                        'date': new Date(),
-                        'name': req.body['sender.name'],
-                        'company': req.body['sender.company']
-                    };
-
                     that._templateEngine.Load('./templates/template.html')
-                    .then(function(template) {
-                        return that._templateEngine.Process(template, payload);
-                    })
-                    .then(function(processed) {
-                        res.send(processed);
-                    })
-                    .catch(function(err) {
-                        console.error(err);
-                        res.sendStatus(500);
-                    });
+                        .then(function (template) {
+                            var payload = {
+                                'generator': 'Formatik Light',
+                                'date': new Date(),
+                                'name': req.body['sender.name'],
+                                'company': req.body['sender.company']
+                            };
+                            return that._templateEngine.Process(template, payload);
+                        }).then(function (processed) {
+                            return that._templateEngine.Save('./generatedHtml/generated.html', processed);
+                        })
+                        .then(function (fileName) {
+                            var options = {format: 'Letter'};
+                            return that._pdfGenerator.Generate(fileName, options);
+                        }).then(function (generated) {
+                            return that._templateEngine.Save('./generatedPdf/generated.pdf', generated);
+                        }).then(function (pdfPath) {
+
+                            fs.readFile(pdfPath, function (err, data) {
+                                if (err) {
+                                    throw err;
+                                }
+                                res.pipe(data);
+                            });
+                        })
+                        .catch(function (err) {
+                            console.error(err);
+                            res.sendStatus(500);
+                        });
                 }
             },
             //
             // Error handler
             //
-            OnError: function() {
+            OnError: function () {
                 var that = this;
-                return function(err, req, res, next) {
+                return function (err, req, res, next) {
                     that._server.Log('Unexpected error with request: ', req.path, err, err.stack);
                     res.sendStatus(500);
                 }
@@ -115,6 +132,7 @@
             this.message = what;
         }
     }
+
     RequestMiddlewareError.prototype = Object.create(Error.prototype);
     RequestMiddlewareError.prototype.constructor = RequestMiddlewareError;
 

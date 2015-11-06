@@ -2,33 +2,44 @@
 // PdfGenerator.js
 //
 
-(function() {
+(function () {
 
     "use strict";
+
+    var fs = require('fs');
+    var pdf = require('html-pdf');
 
     //
     // PdfGenerator
     //
-    var PdfGenerator = function() {
+    var PdfGenerator = function () {
         return {
             //
             // Initialize
             //
-            Initialize: function() {
+            Initialize: function () {
             },
             //
             // Generate
             //
-            Generate: function(name, options) {
-                 var promise = new Promise(function(resolve, reject) {
-                     try {
-                        resolve(true);
-                     }
-                     catch(e) {
-                         reject(e);
-                     }
-                 });
-                 return promise;
+            Generate: function (filename, options) {
+                var promise = new Promise(function (resolve, reject) {
+                    try {
+                        var fullname = require.resolve(filename);
+                        var html = fs.readFileSync(fullname, 'utf8');
+
+                        pdf.create(html, options).toFile('./generated.pdf', function (err, pdf) {
+                            if (err) {
+                                reject(err);
+                            }
+                            resolve(pdf);
+                        });
+                    }
+                    catch (e) {
+                        reject(e);
+                    }
+                });
+                return promise;
             }
         };
     };
