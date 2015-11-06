@@ -14,7 +14,7 @@
     "pdf"
   ],
   "license": "BSD",
-  "homepage": "http://localhost/",
+  "homepage": "http://localhost:8080/",
   "dependencies": {
     "jquery": "~2.1.4",
     "jquery-ui": "~1.11.4",

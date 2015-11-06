@@ -1,4 +1,4 @@
-;//
+//
 // RequestMiddleware.js
 //
 
@@ -6,15 +6,26 @@
 
     "use strict";
 
+    var path = require('path');
+    var uuid = require('uuid');
     var TemplateEngine = require('./TemplateEngine');
+    var PdfGenerator = require('./PdfGenerator');
 
     //
     // RequestMiddleware
     //
     var RequestMiddleware = function() {
+        var GetOutputPathFor = function(fileMask, fileExt) {
+            var fileName = fileMask + '.' + fileExt.toLowerCase();
+            var filePath = path.join(__dirname, '..', 'var', 'generated', fileName);
+            var normalizedFilePath = path.normalize(filePath);
+            return normalizedFilePath;
+        };
+
         return {
             _server: null,
             _templateEngine: new TemplateEngine(),
+            _pdfGenerator: new PdfGenerator(),
             //
             // Initializer
             //
@@ -22,6 +33,7 @@
                 this._server = server;
 
                 this._templateEngine.Initialize();
+                this._pdfGenerator.Initialize();
 
             },
             //
@@ -69,12 +81,22 @@
                         'company': req.body['sender.company']
                     };
 
+                    var outFileMask = uuid.v4();
+                    var outFileHtmlPath = GetOutputPathFor(outFileMask, 'html');
+                    var outFilePdfPath = GetOutputPathFor(outFileMask, 'pdf');
+
                     that._templateEngine.Load('./templates/template.html')
                     .then(function(template) {
                         return that._templateEngine.Process(template, payload);
                     })
                     .then(function(processed) {
-                        res.send(processed);
+                        return that._templateEngine.Save(outFileHtmlPath, processed);
+                    })
+                    .then(function(filename) {
+                        return that._pdfGenerator.Generate(outFileHtmlPath, outFilePdfPath);
+                    })
+                    .then(function(filename) {
+                        res.sendfile(outFileHtmlPath);
                     })
                     .catch(function(err) {
                         console.error(err);

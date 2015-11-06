@@ -1,3 +1,7 @@
+//
+// General-js-test.js
+//
+
 var assert = require("assert");
 var should = require('should');
 

@@ -34,7 +34,7 @@
             // Initialize
             //
             Initialize: function(options) {
-                options = options || DefaultOptions;
+                var options = options || DefaultOptions;
 
                 if ('logger' in options) {
                     this._options.logger = options.logger;

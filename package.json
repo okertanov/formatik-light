@@ -5,15 +5,17 @@
   "main": "server/App.js",
   "scripts": {
     "start": "./bin/run.sh",
+    "stop": "./bin/stop.sh",
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/okertanov/formatik-light.git"
   },
   "keywords": [
     "formatik",
-    "pdf"
+    "pdf",
+    "html"
   ],
   "author": "Oleg Kertanov",
   "license": "MIT",

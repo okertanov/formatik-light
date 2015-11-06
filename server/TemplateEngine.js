@@ -49,7 +49,7 @@
                             if (err) {
                                 reject(err);
                             };
-                            resolve(true);
+                            resolve(filename);
                         });
                     }
                     catch(e) {

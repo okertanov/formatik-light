@@ -108,6 +108,9 @@ Links
 
 [github:coolwanglu/pdf2htmlEX](https://github.com/coolwanglu/pdf2htmlEX)  
 
+[node-html-pdf](https://github.com/marcbachmann/node-html-pdf)  
+[node-pdc](https://github.com/pvorb/node-pdc)  
+
 [How to run node.js app in supervisor behind nginx](https://scottlinux.com/2014/08/27/how-to-run-node-js-app-in-supervisor-behind-nginx-on-debian-wheezy/)  
 [Automatically reload node.js files with Supervisor](http://www.jblotus.com/2011/06/18/automatically-reload-node-js-files-with-supervisor/)  
 [Operating Node.js in Production](http://blog.risingstack.com/operating-node-in-production/)  

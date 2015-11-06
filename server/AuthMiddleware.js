@@ -1,4 +1,4 @@
-;//
+//
 // AuthMiddleware.js
 //
 
