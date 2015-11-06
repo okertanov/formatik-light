@@ -63,14 +63,23 @@
                     that._server.Log('Request: ', req.path, req.ip, req.body);
 
                     var payload = {
+                        'generator': 'Formatik Light',
+                        'date': new Date(),
                         'name': req.body['sender.name'],
                         'company': req.body['sender.company']
                     };
 
-                    var template = that._templateEngine.Load('./templates/template.html');
-                    var processed = that._templateEngine.Process(template, payload);
-
-                    res.send(processed);
+                    that._templateEngine.Load('./templates/template.html')
+                    .then(function(template) {
+                        return that._templateEngine.Process(template, payload);
+                    })
+                    .then(function(processed) {
+                        res.send(processed);
+                    })
+                    .catch(function(err) {
+                        console.error(err);
+                        res.sendStatus(500);
+                    });
                 }
             },
             //
@@ -85,6 +94,30 @@
             }
         };
     };
+
+    //
+    // RequestMiddlewareError
+    //
+    function RequestMiddlewareError(what) {
+        this.name = 'RequestMiddlewareError';
+
+        if (!what) {
+            this.message = 'Unknown Request Middleware Module Error';
+        }
+        else if (what instanceof Error && what.message) {
+            this.message = what.message;
+            this.fileName = what.fileName;
+            this.lineNumber = what.lineNumber;
+            this.columnNumber = what.columnNumber;
+            this.stack = what.stack;
+        }
+        else {
+            this.message = what;
+        }
+    }
+    RequestMiddlewareError.prototype = Object.create(Error.prototype);
+    RequestMiddlewareError.prototype.constructor = RequestMiddlewareError;
+
 
     //
     // Module Exports

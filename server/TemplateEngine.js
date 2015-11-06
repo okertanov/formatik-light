@@ -23,23 +23,56 @@
             // Load
             //
             Load: function(filename) {
-                var fullname = require.resolve(filename);
-                var buffer = fs.readFileSync(fullname, 'utf8');
-                return buffer;
+                var promise = new Promise(function(resolve, reject) {
+                    try {
+                        var fullname = require.resolve(filename);
+                        fs.readFile(fullname, 'utf8', function (err, data) {
+                            if (err) {
+                                reject(err);
+                            };
+                            resolve(data);
+                        });
+                    }
+                    catch(e) {
+                        reject(e);
+                    }
+                });
+                return promise;
             },
             //
             // Save
             //
             Save: function(filename, contents) {
-                fs.writeFileSync(filename, contents);
+                var promise = new Promise(function(resolve, reject) {
+                    try {
+                        fs.writeFile(filename, contents, function (err) {
+                            if (err) {
+                                reject(err);
+                            };
+                            resolve(true);
+                        });
+                    }
+                    catch(e) {
+                        reject(e);
+                    }
+                });
+                return promise;
             },
             //
             // Process
             //
             Process: function(template, payload) {
-                var compiled = Handlebars.compile(template);
-                var processed = compiled(payload);
-                return processed;
+                var promise = new Promise(function(resolve, reject) {
+                    try {
+                        var compiled = Handlebars.compile(template);
+                        var processed = compiled(payload);
+                        resolve(processed);
+                    }
+                    catch(e) {
+                        reject(e);
+                    }
+                });
+                return promise;
             }
         };
     };
