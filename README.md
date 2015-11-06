@@ -25,18 +25,18 @@ MVP (tech perspective)
  1. Post
  2. Response
 
-### Tier 1 [ ]
+### Tier 1 [+]
  1. Post
  2. **Sync generation**
- 3. Response
+ 3. **Persistence (both html/pdf)**
+ 4. Response
 
 ### Tier 2 [ ]
 1. Post
 2. Sync generation
-3. **Persistence (both html/pdf)**
-4. Response
-5. Stabilization
-6. Initial online deployment via 'git push www'
+3. Response
+4. **Stabilization**
+5. **Initial online deployment via 'git push www'**
 
 ### Tier 3 [ ]
 1. **Form validation**
@@ -97,6 +97,10 @@ Deployment & Running
 ### Open in a browser
 
 [http://localhost:8080/index.html](http://localhost:8080/index.html)
+
+or
+
+`npm run open`
 
 
 Links
