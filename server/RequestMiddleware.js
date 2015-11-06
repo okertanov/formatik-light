@@ -81,11 +81,12 @@
                         'company': req.body['sender.company']
                     };
 
-                    var outFileMask = uuid.v4();
-                    var outFileHtmlPath = GetOutputPathFor(outFileMask, 'html');
-                    var outFilePdfPath = GetOutputPathFor(outFileMask, 'pdf');
+                    var outFileMask = uuid.v4(),
+                        outFileHtmlPath = GetOutputPathFor(outFileMask, 'html'),
+                        outFilePdfPath = GetOutputPathFor(outFileMask, 'pdf'),
+                        inFileTemplate = './templates/template.html';
 
-                    that._templateEngine.Load('./templates/template.html')
+                    that._templateEngine.Load(inFileTemplate)
                     .then(function(template) {
                         return that._templateEngine.Process(template, payload);
                     })
