@@ -10,6 +10,7 @@
     var uuid = require('uuid');
     var TemplateEngine = require('./TemplateEngine');
     var PdfGenerator = require('./PdfGenerator');
+    var FileManager = require('./FileManager');
 
     //
     // RequestMiddleware
@@ -26,6 +27,8 @@
             _server: null,
             _templateEngine: new TemplateEngine(),
             _pdfGenerator: new PdfGenerator(),
+            _fileManager: new FileManager(),
+
             //
             // Initializer
             //
@@ -34,6 +37,7 @@
 
                 this._templateEngine.Initialize();
                 this._pdfGenerator.Initialize();
+                this._fileManager.Initialize();
             },
             //
             // Request handler: 'GET /'
@@ -85,12 +89,12 @@
                         outFilePdfPath = GetOutputPathFor(outFileMask, 'pdf'),
                         inFileTemplate = './templates/template.html';
 
-                    that._templateEngine.Load(inFileTemplate)
+                    that._fileManager.Load(inFileTemplate)
                     .then(function(template) {
                         return that._templateEngine.Process(template, payload);
                     })
                     .then(function(processed) {
-                        return that._templateEngine.Save(outFileHtmlPath, processed);
+                        return that._fileManager.Save(outFileHtmlPath, processed);
                     })
                     .then(function(filename) {
                         return that._pdfGenerator.Generate(outFileHtmlPath, outFilePdfPath);
