@@ -11,11 +11,21 @@
 
     //
     // PdfGenerator
+    // See https://github.com/marcbachmann/node-html-pdf
     //
     var PdfGenerator = function() {
         var DefaultOptions = {
             // Allowed units: A3, A4, A5, Legal, Letter, Tabloid
             'format': 'A4',
+            // Portrait or landscape
+            'orientation': 'landscape',
+            // Default is 0, units: mm, cm, in, px
+            'border': {
+                'top': '10mm',
+                'right': '10mm',
+                'bottom': '10mm',
+                'left': '10mm'
+            },
             // Allowed file types: png, jpeg, pdf
             'type': 'pdf',
             // Only used for types png & jpeg

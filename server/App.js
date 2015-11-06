@@ -6,7 +6,7 @@
 
     "use strict";
 
-    var Server = require("./Server");
+    var Server = require('./Server');
 
     var server = new Server();
     server.Initialize();
