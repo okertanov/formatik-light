@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./bin/run.sh",
     "stop": "./bin/stop.sh",
-    "test": "mocha"
+    "test": "mocha",
+    "open": "./bin/open.sh"
   },
   "repository": {
     "type": "git",
